@@ -7,7 +7,8 @@ using namespace std;
 void create_and_send(socket_server* server)
 {
   socket_client* client = new socket_client(server->accept());
-  client->send("HTTP/1.1 200 Status OK\r\nContent-Length:12\r\n\r\nHello World!");
+  string msg = client->recv();
+  string status = msg.substr(0, msg.find("\r\n"));
 }
 
 int main()
