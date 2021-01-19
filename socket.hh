@@ -65,19 +65,12 @@ public:
 
   std::string recv()
   {
-    std::string msg;
-
-    int len = 32, recvlen = 0;
+    int len = 2048, recvlen = 0;
     char* buffer = new char[len];
 
-    while ((recvlen = ::recv(m_fd, buffer, len, 0)) > 0)
-    {
-      msg += std::string(buffer, buffer + recvlen);
-      if (recvlen < len)
-        break;
-    }
-
-    return msg;
+    if ((recvlen = ::recv(m_fd, buffer, len, 0)) < 0)
+      throw "socket_client::recv";
+    return std::string(buffer, buffer + recvlen);
   }
 };
 
